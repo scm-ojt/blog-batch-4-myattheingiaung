@@ -1,5 +1,6 @@
 nav {
 	background-color: blue;
+	padding: 10px 0px;
 }
 
 nav ul {
@@ -24,7 +25,10 @@ nav a {
 }
 
 nav a:hover { 
-	background-color: #1d1d92; 
+	text-decoration: underline;
+	text-decoration-color: white;
+	text-decoration-thickness: 3px;
+	text-underline-offset: 7px;
 }
 
 nav ul ul {

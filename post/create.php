@@ -12,6 +12,7 @@ session_start();
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/post.css">
+    <link href="../css/multi-select.css" media="screen" rel="stylesheet" type="text/css">
 </head>
 <body>
     <?php
@@ -52,30 +53,29 @@ session_start();
                     $created_date = $dt->format('Y.m.d , h:i:s');
                     $sql = "INSERT INTO posts (image,title,body,created_date,updated_date) VALUES ('$image','$title','$description','$created_date','$updated_date')";
                     if(mysqli_query($conn,$sql)){
-                        // header("location:create.php");
-                        echo "<p>success</p>";
+                        header("location:index.php");
                     }else{
                         echo "Query Fail : ".mysqli_error($conn);
                     }
 
-                    if(isset($_POST["cname"])) { 
-                        foreach ($_POST['cname'] as $cid) {
-                            $id = 1;
-                            echo "Selected Category Id - $cid <br>";
-                            $sql = "INSERT INTO category_post (post_id,category_id) VALUES ('$id','$cid')";
-                            if(mysqli_query($conn,$sql)){
-                                // header("location:create.php");
-                                echo "<p>category_post success</p>";
-                            }else{
+                    if(isset($_POST["cname"])) {
+                        $ss = "select last_insert_id()";
+                            $query = mysqli_query($conn,$ss);
+                            $row = mysqli_fetch_assoc($query);
+                            $pid = $row['last_insert_id()'];
+                            $sql = "INSERT INTO category_post (post_id,category_id) VALUES ('$pid','$cid')";
+                            if(!mysqli_query($conn,$sql)){
                                 echo "Query Fail : ".mysqli_error($conn);
-                            }
-                        }
+                            } 
+                        // foreach ($_POST['cname'] as $cid) { 
+                        // }
                     }
                 }
             }
     ?>
-    <div class="up">
-        <h2>Create Post</h2>
+    <div class="container">
+        <div class="up">
+        <h2 class="cmn-ttl">Create Post</h2>
         <form class="form" method="post" action="" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="image">Image</label><br>
@@ -91,7 +91,7 @@ session_start();
             
             <div class="form-group">
                 <label for="category-name">Category Name</label><br>
-                <select name="cname[]" id="" multiple>
+                <select name="cname" id="pre-selected-options" multiple>
                     <?php 
                         $categories = "SELECT * FROM categories";
                         $query = mysqli_query($conn,$categories);
@@ -104,13 +104,21 @@ session_start();
             </div>
             <div class="form-group">
                 <label for="description">Description</label><br>
-                <textarea name="description" id="" cols="30" rows="5"></textarea>
+                <textarea name="description" id="" rows="5"></textarea>
                 <small class="error"><?php if(isset($_SESSION['error']['description'])){ echo $_SESSION['error']['description']; } ?></small>
             </div>
             <div class="btn-up">
                 <button class="btn" name="postAdd">Add</button>
             </div>
         </form>
+        </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../js/jquery.multi-select.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function(){
+            $('#pre-selected-options').multiSelect();
+        });
+    </script>
 </body>
 </html>

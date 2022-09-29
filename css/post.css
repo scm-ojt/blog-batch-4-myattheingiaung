@@ -1,0 +1,123 @@
+img{
+    width: 100px;
+}
+
+.inner{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.cmn-ttl{
+    font-size: 36px;
+    margin: 25px 0px;
+    text-align: center;
+    color: blue;
+}
+
+table{
+    width: 100%;
+    background-color: #fff;
+}
+
+th{
+    font-weight: 700;
+}
+
+tr,td,th{
+    border: 1px solid #dee2e6;
+}
+
+th,td{
+    text-align: center;
+    padding: 10px 10px;
+    vertical-align: middle;
+}
+
+p.success {
+    color: green;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.error {
+    color: red;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+a.del {
+    margin-right: 10px;
+    color: red;
+}
+
+a.edit{
+    color: #1d1d92;
+}
+
+.up{
+    width: 500px;
+    margin: 0 auto;
+}
+
+.form-group{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+label{
+    font-size: 20px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+input,select,textarea{
+    width: 100%;
+    padding-left: 10px;
+    outline: none;
+}
+
+input{
+    padding: 8px 10px;
+}
+
+.search{
+    width: 200px;
+    padding: 10px 10px;
+}
+
+input[type="file"] {
+    border: 0;
+    width: 100%;
+}
+
+button{
+    padding: 10px 30px;
+    border: 2px solid blue;
+    font-weight: 500;
+    color: blue;
+    text-transform: uppercase;
+    background-color: #fff;
+}
+
+button:hover{
+    padding: 12px 30px;
+    border: none;
+    font-weight: 500;
+    color: #fff;
+    text-transform: uppercase;
+    background-color: blue;
+    transition: 0.1s;
+}
+
+.pagination{
+    margin-top: 20px;
+}
+
+.paginate{
+    display: inline-block;
+    float: left;
+    border: 1px solid black;
+    text-decoration: none;
+    padding: 10px 15px;
+    color: blue;
+}
