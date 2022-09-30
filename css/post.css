@@ -2,9 +2,22 @@ img{
     width: 100px;
 }
 
+body{
+    background-color: #f8f9fa;
+}
+
 .inner{
     width: 90%;
     margin: 0 auto;
+}
+
+.card{
+    width: 70%;
+    float: left;
+}
+
+.card-body{
+    padding: 20px 40px;
 }
 
 .cmn-ttl{
@@ -14,9 +27,24 @@ img{
     color: blue;
 }
 
+.ttl{
+    font-size: 36px;
+    font-weight: 700;
+    margin-top: 15px;
+}
+
 table{
     width: 100%;
     background-color: #fff;
+}
+
+.img-div{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.show-img{
+    width: 500px;
 }
 
 th{
@@ -33,15 +61,46 @@ th,td{
     vertical-align: middle;
 }
 
+span.user-logo {
+    display: inline-block;
+    width: 31px;
+    padding: 3px;
+    color: blue;
+    border-radius: 50%;
+    font-size: 26px;
+}
+
+span.user-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: blue;
+}
+
+p.cname {
+    margin: 15px 0px 25px;
+}
+
+span.cat-name {
+    font-size: 20px;
+    color: #645959;
+    text-transform: capitalize;
+}
+
+p.description {
+    line-height: 1.5;
+    letter-spacing: 1px;
+    text-align: justify;
+}
+
 p.success {
     color: green;
-    margin-bottom: 20px;
+    margin: 20px 0;
     font-weight: 700;
 }
 
 .error {
     color: red;
-    margin-bottom: 20px;
+    margin: 20px 0;
     font-weight: 700;
 }
 
@@ -52,6 +111,10 @@ a.del {
 
 a.edit{
     color: #1d1d92;
+}
+
+a.details{
+    margin-left: 10px;
 }
 
 .up{
@@ -115,9 +178,67 @@ button:hover{
 
 .paginate{
     display: inline-block;
-    float: left;
     border: 1px solid black;
     text-decoration: none;
     padding: 10px 15px;
     color: blue;
+}
+
+.arrow{
+    margin-left: 40px;
+}
+
+.arrow a{
+    color: blue;
+    text-decoration: none;
+}
+
+.arrow:hover > a{
+    color: white;
+}
+
+.lft{
+    float: left;
+}
+
+.rgt{
+    float: right;
+}
+
+.comment{
+    width: 30%;
+    float: right;
+}
+
+form{
+    margin-top: 20px;
+}
+.form-group{
+    display: inline;
+}
+
+.btn-up{
+    display: inline-block;
+    margin-left: -5px;
+}
+
+.btn-up button{
+    padding: 6px 10px;
+    color: blue;
+    background-color: #fff;
+    border: 1px solid black;
+}
+
+input{
+    width: 70%;
+    outline: none;
+    padding: 5px 20px;
+}
+
+small.error {
+    margin-top: 5px;
+    display: inline-block;
+    font-weight: 500;
+    color: red;
+    font-size: 14px;
 }

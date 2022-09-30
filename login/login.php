@@ -11,7 +11,7 @@ session_start();
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/login.css">
-    <title>Login Page</title>
+    <title>Login</title>
 </head>
 <body>
 <?php
@@ -32,6 +32,7 @@ if(isset($_POST['loginBtn'])){
         $sql = "SELECT * FROM users where email='$email'";
         $query = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($query);
+        $_SESSION['user']['id']= $row['id'];
         $_SESSION['user']['name']= $row['name'];
         if($row){
             if(password_verify($password,$row['password'])){

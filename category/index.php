@@ -59,7 +59,7 @@ require_once "../common/conn.php";
         <div class="rgt">
             <h2 class="cmn-ttl">Category List</h2>
             <?php
-            $sql1 = "SELECT * FROM categories";
+            $sql1 = "SELECT * FROM categories ORDER BY id DESC";
             $qurey = mysqli_query($conn,$sql1);
             ?>
             <div class="">
@@ -82,7 +82,7 @@ require_once "../common/conn.php";
                             echo "<td>{$rows['name']}</td>";
                             echo "<td>{$rows['created_date']}</td>";
                             echo "<td>{$rows['updated_date']}</td>";
-                            echo "<td><a class='del' href='destroy.php?id={$rows['id']}'><i class='fa-solid fa-trash'></i></a><a class='edit' href='edit.php?id={$rows['id']}'><i class='fa-solid fa-pen-to-square'></i></i></a></td>";
+                            echo "<td><a class='del' href='delete.php?id={$rows['id']}'><i class='fa-solid fa-trash'></i></a><a class='edit' href='edit.php?id={$rows['id']}'><i class='fa-solid fa-pen-to-square'></i></i></a></td>";
                         ?>
                         <?php } 
                         echo "</tr>";

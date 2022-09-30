@@ -12,7 +12,7 @@ session_start();
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/post.css">
-    <link href="../css/multi-select.css" media="screen" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/post.css"><link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
     <?php
@@ -21,7 +21,8 @@ session_start();
         $id = $_GET['id'];
         $sql = "SELECT posts.*, categories.name FROM posts 
                 JOIN category_post ON posts.id = category_post.post_id
-                JOIN categories ON categories.id = category_post.category_id";
+                JOIN categories ON categories.id = category_post.category_id
+                WHERE posts.id = '$id'";
         $query = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($query);
             if(isset($_POST['postEdit'])){
@@ -31,6 +32,7 @@ session_start();
                         $errorMessage = 1;
                         $_SESSION['error']['type']= "Select .png, .jpeg, .gif file!";
                     }elseif($errorMessage == 0){
+                        unlink($row['image']);
                         $target_dir = "../img/posts";
                         $fileExt = explode('.',$_FILES['image']['name']);
                         $fileActualExt = strtolower(end($fileExt));
@@ -67,7 +69,6 @@ session_start();
                             echo "Query Fail : ".mysqli_error($conn);
                         }    
                         foreach ($_POST['cname'] as $cid) {
-                            die($cid);
                             $sql = "INSERT INTO category_post (post_id,category_id) VALUES ('$id','$cid')";
                             if(!mysqli_query($conn,$sql)){
                                 echo "Query Fail : ".mysqli_error($conn);
@@ -98,24 +99,35 @@ session_start();
             </div>
             <div class="form-group">
                 <label for="category-name">Category Name</label><br>
-                <select name="cname" id="pre-selected-options">
+                <select name="cname[]" id="pre-selected-options" multiple>
                     <?php 
                         $sql = "SELECT category_post.category_id,categories.name,posts.id FROM categories 
                         JOIN category_post ON categories.id = category_post.category_id
                         JOIN posts ON posts.id = category_post.post_id
                         WHERE posts.id = '$id'";
                         $q = mysqli_query($conn,$sql);
-                        $result = mysqli_fetch_array($q);
-                        foreach($result as $r){
-                            echo $r;
+                        while($result = mysqli_fetch_array($q)){
+                            $catPost[] = $result;
+                        }; 
+                        $category = "SELECT * FROM categories";
+                        $query = mysqli_query($conn,$category);
+                        while($cat = mysqli_fetch_assoc($query)){
+                            $categories[] = $cat;
                         }
-                        $categories = "SELECT * FROM categories";
-                        $query = mysqli_query($conn,$categories);
-                        while($rows = mysqli_fetch_assoc($query)){
-                            print_r($rows);
-                            echo "<option value='{$rows['id']}' selected='{$rows['id']}=={$result['category_id']}?'selected':'''>{$rows['name']}</option>"; 
+                        foreach($categories as $rows){
+                            foreach($catPost as $catName) {
+                                if($rows['id']== $catName['category_id']){
+
+                        ?>
+                            <option value="<?php echo $rows['id'] ?>" <?php echo $rows['id']==$catName['category_id']?"selected":"" ?>><?php echo $rows['name'] ?></option> 
+                        <?php 
+                                } 
+                            } 
+                        ?>
+                            <option value="<?php echo $rows['id'] ?>"><?php echo $rows['name'] ?></option> 
+                    <?php
                         }
-                    ?>  
+                     ?>  
                 </select>
                 <?php
                 ?>
@@ -132,10 +144,10 @@ session_start();
         </form>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../js/jquery.multi-select.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $('#pre-selected-options').multiSelect({ keepOrder: true });
+        $(document).ready(function() {
+            $('#pre-selected-options').select2();
         });
     </script>
 </body>

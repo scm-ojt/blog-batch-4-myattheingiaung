@@ -11,8 +11,7 @@ session_start();
     <title>Post Create</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/post.css">
-    <link href="../css/multi-select.css" media="screen" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/post.css"><link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
     <?php
@@ -51,15 +50,17 @@ session_start();
                     $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
                     $updated_date = $dt->format('Y.m.d , h:i:s');
                     $created_date = $dt->format('Y.m.d , h:i:s');
-                    $sql = "INSERT INTO posts (image,title,body,created_date,updated_date) VALUES ('$image','$title','$description','$created_date','$updated_date')";
+                    $user_id = $_SESSION['user']['id'];
+                    $sql = "INSERT INTO posts (image,title,body,created_date,updated_date,user_id) VALUES ('$image','$title','$description','$created_date','$updated_date','$user_id')";
                     if(mysqli_query($conn,$sql)){
                         header("location:index.php");
                     }else{
                         echo "Query Fail : ".mysqli_error($conn);
                     }
 
-                    if(isset($_POST["cname"])) {
-                        $ss = "select last_insert_id()";
+                    if(isset($_POST["cname"])) {                       
+                        foreach ($_POST['cname'] as $cid) { 
+                            $ss = "select last_insert_id()";
                             $query = mysqli_query($conn,$ss);
                             $row = mysqli_fetch_assoc($query);
                             $pid = $row['last_insert_id()'];
@@ -67,8 +68,7 @@ session_start();
                             if(!mysqli_query($conn,$sql)){
                                 echo "Query Fail : ".mysqli_error($conn);
                             } 
-                        // foreach ($_POST['cname'] as $cid) { 
-                        // }
+                        }
                     }
                 }
             }
@@ -91,7 +91,7 @@ session_start();
             
             <div class="form-group">
                 <label for="category-name">Category Name</label><br>
-                <select name="cname" id="pre-selected-options" multiple>
+                <select name="cname[]" id="pre-selected-options" multiple>
                     <?php 
                         $categories = "SELECT * FROM categories";
                         $query = mysqli_query($conn,$categories);
@@ -114,10 +114,10 @@ session_start();
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../js/jquery.multi-select.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#pre-selected-options').multiSelect();
+            $('#pre-selected-options').select2();
         });
     </script>
 </body>

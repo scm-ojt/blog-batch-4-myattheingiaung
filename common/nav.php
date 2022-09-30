@@ -6,7 +6,7 @@
             </div>
             <ul class="menu">
                 <li><a class="active" href="#">Home</a></li>
-                <li><a href="../post/create.php">Post</a></li>
+                <li><a href="../post/index.php">Post</a></li>
                 <li><a href="../category/index.php">Category</a></li>
                 <li class="dropdown"><a href="#"><?php if(isset($_SESSION['user']['name'])){ echo $_SESSION['user']['name']; } ?></a>
                 <ul>
