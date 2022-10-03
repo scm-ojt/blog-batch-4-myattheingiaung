@@ -65,8 +65,8 @@ if(isset($_POST['loginBtn'])){
                 </div>
                 <div class="btn-up">
                     <button class="btn" name="loginBtn">Login</button>
-                    <a href="../register/register.php">Register</a>&nbsp;|
-                    <a href="../login/reset.php">Reset Password</a>
+                    <a class="link" href="../register/register.php">Register</a>&nbsp;|
+                    <a class="link" href="../login/reset.php">Reset Password</a>
                 </div>
             </form>
         </div>

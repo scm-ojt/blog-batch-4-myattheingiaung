@@ -12,13 +12,14 @@ session_start();
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/post.css"><link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <?php
         include "../common/nav.php";
         $errorMessage = 0;
             if(isset($_POST['postAdd'])){
-                $fileType = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+                $fileType = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif','image/jfif'];
                 if(empty($_FILES['image']['name'] )){
                     $errorMessage = 1;
                     $_SESSION['error']['name']= "Image field is required!";
@@ -48,8 +49,8 @@ session_start();
                     $title = $_POST['title'];
                     $description = $_POST['description'];
                     $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                    $updated_date = $dt->format('Y.m.d , h:i:s');
-                    $created_date = $dt->format('Y.m.d , h:i:s');
+                    $updated_date = $dt->format('Y.m.d  h:i:s');
+                    $created_date = $dt->format('Y.m.d  h:i:s');
                     $user_id = $_SESSION['user']['id'];
                     $sql = "INSERT INTO posts (image,title,body,created_date,updated_date,user_id) VALUES ('$image','$title','$description','$created_date','$updated_date','$user_id')";
                     if(mysqli_query($conn,$sql)){
@@ -75,7 +76,10 @@ session_start();
     ?>
     <div class="container">
         <div class="up">
-        <h2 class="cmn-ttl">Create Post</h2>
+        <div class="ttl-div clearfix">
+            <h2 class="lft cmn-ttl">Create Post</h2>
+            <button class="rgt"><a href="index.php"><i class="fa-solid fa-list"></i></a></button>
+        </div>
         <form class="form" method="post" action="" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="image">Image</label><br>

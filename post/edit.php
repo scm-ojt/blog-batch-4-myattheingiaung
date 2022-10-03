@@ -13,12 +13,14 @@ session_start();
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/post.css"><link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <?php
         include "../common/nav.php";
         $errorMessage = 0;
         $id = $_GET['id'];
+        $_SESSION['pid'] = $id;
         $sql = "SELECT posts.*, categories.name FROM posts 
                 JOIN category_post ON posts.id = category_post.post_id
                 JOIN categories ON categories.id = category_post.category_id
@@ -55,7 +57,7 @@ session_start();
                     $title = $_POST['title'];
                     $description = $_POST['description'];
                     $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                    $updated_date = $dt->format('Y.m.d , h:i:s');
+                    $updated_date = $dt->format('Y.m.d h:i:s');
                     $sql = "UPDATE posts SET image='$image',title='$title',body='$description',updated_date='$updated_date' WHERE  id=$id";
                     if(mysqli_query($conn,$sql)){
                         header("location:index.php");
@@ -79,7 +81,10 @@ session_start();
             }
     ?>
     <div class="up">
-        <h2 class="cmn-ttl">Edit Post</h2>
+        <div class="ttl-div clearfix">
+            <h2 class="lft cmn-ttl">Edit Post</h2>
+            <button class="rgt"><a href="index.php"><i class="fa-solid fa-list"></i></a></button>
+        </div>
         <form class="form" method="post" action="" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
             <div class="form-group">
@@ -107,26 +112,16 @@ session_start();
                         WHERE posts.id = '$id'";
                         $q = mysqli_query($conn,$sql);
                         while($result = mysqli_fetch_array($q)){
-                            $catPost[] = $result;
+                            $catId[] = $result['category_id'];
                         }; 
                         $category = "SELECT * FROM categories";
                         $query = mysqli_query($conn,$category);
-                        while($cat = mysqli_fetch_assoc($query)){
-                            $categories[] = $cat;
-                        }
-                        foreach($categories as $rows){
-                            foreach($catPost as $catName) {
-                                if($rows['id']== $catName['category_id']){
-
+                        while($rows = mysqli_fetch_assoc($query)){
                         ?>
-                            <option value="<?php echo $rows['id'] ?>" <?php echo $rows['id']==$catName['category_id']?"selected":"" ?>><?php echo $rows['name'] ?></option> 
-                        <?php 
-                                } 
-                            } 
-                        ?>
-                            <option value="<?php echo $rows['id'] ?>"><?php echo $rows['name'] ?></option> 
+                            
+                            <option value="<?php echo $rows['id'] ?>" <?php echo in_array($rows['id'],$catId)?"selected":"" ?> ><?php echo $rows['name'] ?></option> 
                     <?php
-                        }
+                            }
                      ?>  
                 </select>
                 <?php

@@ -29,8 +29,8 @@ require_once "../common/conn.php";
                 if($errorMessage == 0) {
                     $name = $_POST['name'];
                     $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                    $updated_date = $dt->format('Y.m.d , h:i:s');
-                    $created_date = $dt->format('Y.m.d , h:i:s');
+                    $updated_date = $dt->format('Y.m.d h:i:s');
+                    $created_date = $dt->format('Y.m.d h:i:s');
                     $sql = "INSERT INTO categories (name,created_date,updated_date) VALUES ('$name','$created_date','$updated_date')";
                     if(mysqli_query($conn,$sql)){
                         header("location:index.php");
@@ -42,11 +42,10 @@ require_once "../common/conn.php";
             ?>
             <div class="container">
                 <div class="inner">
-                    <h2 class="cmn-ttl">Create Category</h2>
                     <form class="form" action="" method="post">
                     <div class="form-group">
                         <label for="name">Category Name</label><br>
-                        <input type="text" name="name" value="<?php echo isset($name)?$name:'' ?>">
+                        <input type="text" name="name" placeholder="Enter Category Name..." value="<?php echo isset($name)?$name:'' ?>">
                         <small class="error"><?php if(isset($_SESSION['error']['name'])){ echo $_SESSION['error']['name']; } ?></small>
                         </div>
                         <div class="btn-up">
@@ -57,7 +56,6 @@ require_once "../common/conn.php";
             </div>
         </div>
         <div class="rgt">
-            <h2 class="cmn-ttl">Category List</h2>
             <?php
             $sql1 = "SELECT * FROM categories ORDER BY id DESC";
             $qurey = mysqli_query($conn,$sql1);
@@ -69,7 +67,6 @@ require_once "../common/conn.php";
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Created Date</th>
                             <th>Updated Date</th>
                             <th>Action</th>
                         </tr>
@@ -80,7 +77,6 @@ require_once "../common/conn.php";
                             echo "<tr>";
                             echo "<td>{$rows['id']}</td>";
                             echo "<td>{$rows['name']}</td>";
-                            echo "<td>{$rows['created_date']}</td>";
                             echo "<td>{$rows['updated_date']}</td>";
                             echo "<td><a class='del' href='delete.php?id={$rows['id']}'><i class='fa-solid fa-trash'></i></a><a class='edit' href='edit.php?id={$rows['id']}'><i class='fa-solid fa-pen-to-square'></i></i></a></td>";
                         ?>

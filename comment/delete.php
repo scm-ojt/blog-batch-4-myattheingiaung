@@ -11,6 +11,6 @@ if(!mysqli_query($conn,$sql)){
     echo "Query Fail : ".mysqli_error($conn);
 }else{
     $_SESSION['success']['msg'] = "Delete Successfully!";
-    header("location:../post/show.php?id=$pid.php");
+    header("location:../post/show.php?id=$pid");
 }
 ?>

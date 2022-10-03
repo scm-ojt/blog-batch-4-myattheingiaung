@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require_once "../common/conn.php"; 
 ?>
 <!DOCTYPE html>
@@ -7,7 +8,7 @@ require_once "../common/conn.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Comment</title>
+    <title>Edit Comment</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/comment.css">
@@ -16,7 +17,11 @@ require_once "../common/conn.php";
 <body>
     <?php 
         $errorMessage = 0;
-        if(isset($_POST['commentAdd'])){
+        $id = $_GET['id'];
+        $comment = "SELECT * FROM comments WHERE id=$id";
+        $query = mysqli_query($conn,$comment);
+        $row = mysqli_fetch_assoc($query);
+        if(isset($_POST['commentEdit'])){
             if(empty($_POST['comment'])){
                 $errorMessage = 1;
                 $_SESSION['error']['comment']= "comment enter";
@@ -28,10 +33,9 @@ require_once "../common/conn.php";
                 $comment = $_POST['comment'];
                 $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
                 $updated_date = $dt->format('Y.m.d  h:i:s');
-                $created_date = $dt->format('Y.m.d  h:i:s');
-                $sql = "INSERT INTO comments (pid,uid,body,created_date,updated_date) VALUES ('$pid','$user_id','$comment','$created_date','$updated_date')";
+                $sql = "UPDATE comments SET body='$comment',updated_date='$updated_date' WHERE  id=$id";
                 if(mysqli_query($conn,$sql)){
-                    header("location:../comment/create.php");
+                    header("location:create.php");
                 }else{
                     echo "Query Fail : ".mysqli_error($conn);
                 }
@@ -40,12 +44,12 @@ require_once "../common/conn.php";
     ?>
     <div class="container">
         <div class="inner">
-            <form action="" method="post" class="clearfix">
-                <div class="form-group ps-fg">
-                    <input type="text" name="comment" placeholder="Add a comment"> 
+            <form action="" method="post" class="">
+                <div class="form-group">
+                    <input type="text" name="comment" placeholder="Update a comment" value="<?php echo $row['body']  ?>"> 
                 </div>
-                <div class="btn-up search-btn">
-                    <button name="commentAdd"><i class="fa-regular fa-paper-plane"></i></button>
+                <div class="btn-up">
+                    <button name="commentEdit"><i class="fa-regular fa-paper-plane"></i></button>
                 </div>
             </form>
             <small class="error"><?php if(isset($_SESSION['error']['comment'])){ echo $_SESSION['error']['comment']; } ?></small>
@@ -58,12 +62,10 @@ require_once "../common/conn.php";
             $qurey = mysqli_query($conn,$sql1);
             while($rows = mysqli_fetch_assoc($qurey)){
             ?>
-                <li class="clearfix">
+                <li>
                     <p><?php echo $rows['body'] ?></p>
-                    <div class="">
-                        <p><a class='del' href='../comment/delete.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-trash'></i></a></p>
-                        <p><a class='edit' href='../comment/edit.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-pen-to-square'></i></a></p>
-                    </div>
+                    <p><a class='del' href='../comment/delete.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-trash'></i></a></p>
+                    <p><a class='edit' href='../comment/edit.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-pen-to-square'></i></a></p>
                 </li>
             <?php
             }

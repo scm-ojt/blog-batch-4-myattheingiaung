@@ -81,28 +81,7 @@ require_once "../common/conn.php";
                 <button class="arrow"><a href="../post/index.php"><i class="fa-solid fa-arrow-left"></i></a></button>
             </div>
             <div class="comment">
-                <div class="inner">
-                <form action="" method="post" class="">
-                        <div class="form-group">
-                            <input type="text" name="comment" placeholder="Add a comment"> 
-                        </div>
-                        <div class="btn-up">
-                            <button name="commentAdd"><i class="fa-regular fa-paper-plane"></i></button>
-                        </div>
-                    </form>
-                    <small class="error"><?php if(isset($_SESSION['error']['comment'])){ echo $_SESSION['error']['comment']; } ?></small>
-                </div>
-            </div>
-            <div class="cmn-show">
-                <ul>
-                    <?php
-                    $sql1 = "SELECT * FROM comments";
-                    $qurey = mysqli_query($conn,$sql1);
-                    while($rows = mysqli_fetch_assoc($qurey)){
-                        echo "<li>- <span>{$rows['body']}</span><span><a class='del' href='../comment/delete.php?id={$rows['id']}'><i class='fa-solid fa-trash'></i></a></span></li>";
-                    }
-                    ?>
-                </ul>
+                <?php include '../comment/create.php' ?>
             </div>
         </div>
     </div>

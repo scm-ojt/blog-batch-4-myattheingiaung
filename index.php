@@ -1,8 +1,3 @@
-<!-- Welcome From Home Page
-<a href="register/register.php">register</a>
-<a href="login/login.php">login</a>
-<a href="login/logout.php">logout</a>
-<p><a href="category/index.php">Category Create</a></p> -->
 <?php 
 require_once "common/conn.php"; 
 session_start();

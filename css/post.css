@@ -13,7 +13,14 @@ body{
 
 .card{
     width: 70%;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
+    background-color: white;
     float: left;
+}
+
+.ps-fg{
+    float: left;
+    width: 80% !important;
 }
 
 .card-body{
@@ -44,22 +51,37 @@ table{
 }
 
 .show-img{
-    width: 500px;
+    width: 300px;
+}
+
+.ttl-div .rgt{
+    margin-top: 21px;
+}
+
+.ttl-div .rgt a{
+    color: white;
+}
+
+.ttl-div .rgt:hover a{
+    color: blue;
+}
+
+thead{
+    background-color: #4662EC;
+    color: white;
 }
 
 th{
     font-weight: 700;
 }
 
-tr,td,th{
-    border: 1px solid #dee2e6;
-}
-
 th,td{
-    text-align: center;
+    text-align: left;
     padding: 10px 10px;
     vertical-align: middle;
 }
+
+tr:nth-child(even) {background-color: rgba(0,0,0,0.05);}
 
 span.user-logo {
     display: inline-block;
@@ -94,13 +116,13 @@ p.description {
 
 p.success {
     color: green;
-    margin: 20px 0;
+    margin: 5px 0 0;
     font-weight: 700;
 }
 
 .error {
     color: red;
-    margin: 20px 0;
+    margin: 5px 0 0;
     font-weight: 700;
 }
 
@@ -115,11 +137,16 @@ a.edit{
 
 a.details{
     margin-left: 10px;
+    color: blue;
 }
 
 .up{
-    width: 500px;
-    margin: 0 auto;
+    width: 580px;
+    margin: 40px;
+    padding: 20px 40px 20px 40px;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
+    margin: 0 auto;;
 }
 
 .form-group{
@@ -146,30 +173,28 @@ input{
 .search{
     width: 200px;
     padding: 10px 10px;
+    border: 1px solid blue;
 }
 
 input[type="file"] {
     border: 0;
     width: 100%;
-}
-
-button{
-    padding: 10px 30px;
-    border: 2px solid blue;
-    font-weight: 500;
-    color: blue;
-    text-transform: uppercase;
-    background-color: #fff;
+    padding: 0px;
 }
 
 button:hover{
-    padding: 12px 30px;
+    padding: 10px 15px;
+    border: 2px solid blue;
+    color: blue;
+    background-color: #fff;
+}
+
+button{
+    padding: 12px 15px;
     border: none;
     font-weight: 500;
     color: #fff;
-    text-transform: uppercase;
     background-color: blue;
-    transition: 0.1s;
 }
 
 .pagination{
@@ -184,17 +209,17 @@ button:hover{
     color: blue;
 }
 
-.arrow{
-    margin-left: 40px;
+.search-form{
+    display: inline-block;
+    margin-top: 20px;
 }
 
 .arrow a{
-    color: blue;
-    text-decoration: none;
+    color: white;
 }
 
 .arrow:hover > a{
-    color: white;
+    color: blue;
 }
 
 .lft{
@@ -208,29 +233,30 @@ button:hover{
 .comment{
     width: 30%;
     float: right;
+    background-color: white;
 }
 
-form{
-    margin-top: 20px;
-}
 .form-group{
-    display: inline;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.form-group img {
+    margin-bottom: 10px;
 }
 
 .btn-up{
     display: inline-block;
-    margin-left: -5px;
 }
 
 .btn-up button{
-    padding: 6px 10px;
-    color: blue;
-    background-color: #fff;
-    border: 1px solid black;
+    font-size: 16px;
+    margin-top: -20px;
+    
 }
 
 input{
-    width: 70%;
+    width: 100%;
     outline: none;
     padding: 5px 20px;
 }

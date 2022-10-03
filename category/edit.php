@@ -33,7 +33,7 @@ require_once"../common/conn.php";
             if($errorMessage == 0) {
                 $name = $_POST['name'];
                 $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                $updated_date = $dt->format('Y.m.d , h:i:s');
+                $updated_date = $dt->format('Y.m.d h:i:s');
                 $sql = "UPDATE categories SET name='$name',updated_date='$updated_date' WHERE  id=$id";
                 if(mysqli_query($conn,$sql)){
                     header("location:index.php");
@@ -46,7 +46,6 @@ require_once"../common/conn.php";
         
         <div class="container">
             <div class="inner">
-                <h2 class="cmn-ttl">Update Category</h2>
                 <form class="form" action="" method="post">
                     <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
                     <div class="form-group">
@@ -62,7 +61,6 @@ require_once"../common/conn.php";
         </div>
     </div>
     <div class="rgt">
-        <h2 class="cmn-ttl">Category List</h2>
         <?php
         $sql1 = "SELECT * FROM categories";
         $qurey = mysqli_query($conn,$sql1);
