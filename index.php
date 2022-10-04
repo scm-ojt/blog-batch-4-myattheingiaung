@@ -1,6 +1,5 @@
 <?php 
 require_once "common/conn.php"; 
-session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +13,5 @@ session_start();
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<?php include "common/nav.php"; ?>
 </body>
 </html>

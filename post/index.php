@@ -1,5 +1,7 @@
 <?php 
 session_start();
+
+
 require_once "../common/conn.php"; 
 ?>
 <!DOCTYPE html>
@@ -18,14 +20,14 @@ require_once "../common/conn.php";
     <?php include "../common/nav.php"; ?>
     <div class="">
         <div class="inner">
-            <div class="clearfix">
+            <div class="clearfix form-gp">
                 <?php
                     if (!isset ($_GET['page']) ) {  
                         $page = 1;  
                     } else {  
                         $page = $_GET['page'];  
                     }  
-                    $results_per_page = 4;  
+                    $results_per_page = 3;  
                     $page_first_result = ($page-1) * $results_per_page;  
                     if(isset($_GET['search'])){
                         $title = $_GET['title'];
@@ -48,16 +50,17 @@ require_once "../common/conn.php";
                  
                 ?>
                 <div class="lft">
-                    <h2 class="cmn-ttl">Post List</h2>
+                <?php if(isset($_SESSION['user']['id'])){ ?>
+                <button class="arrow arrow-btn"><a href="../post/create.php"><i class="fa-solid fa-plus"></i>Create</a></button>
+                <?php } ?>
                 </div>
                 <div class="rgt">
                     <form action="" class="search-form">
                         <div class="">
                             <input type="text" class="search" name="title" placeholder="Search Title...">
-                            <button class="btn" name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <button class="btn search-btn" name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
-                    <button class="arrow"><a href="../post/create.php"><i class="fa-solid fa-circle-plus"></i></a></button>
                 </div>
             </div>
             <div class="">
@@ -65,28 +68,39 @@ require_once "../common/conn.php";
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>User Name</th>
-                            <th>Title</th>
-                            <th>Image</th>
-                            <th>Category Name</th>
-                            <th>Description</th>
-                            <th class="date">Updated Date</th>
+                            <th class="num">No</th>
+                            <th class="uname">User Name</th>
+                            <th class="title">Title</th>
+                            <th class="image">Image</th>
+                            <th class="cat-name">Category Name</th>
+                            <th class="description">Description</th>
+                            <th class="date">Date</th>
                             <th class="action">Action</th>
                         </tr>
                     </thead>
+                    <?php if($number_of_result < 1){
+                    ?>
                     <tbody>
-                        <?php   
+                        <tr>
+                            <td colspan="8" style="text-align: center;"> There is no record</td>
+                        </tr>
+                    </tbody>
+                    <?php }else{ ?>
+                        <tbody>
+                        <?php  
+                        $a= isset($_GET['page']) ? $_GET['page'] : 1;  
+                        $i = ($a - 1) * $results_per_page;
                         while($rows = mysqli_fetch_array($result)){
                             $id = $rows['id'];
                             echo "<tr>";
-                            echo "<td>{$rows['id']}</td>";
+
+                            echo "<td>".++$i."</td>";
 
                             $sql = "SELECT * FROM users WHERE id={$rows['user_id']}";
                             $query = mysqli_query($conn,$sql);
-                            $row = mysqli_fetch_assoc($query);
+                            $user = mysqli_fetch_assoc($query);
 
-                            echo "<td>{$row['name']}</td>";
+                            echo "<td>{$user['name']}</td>";
                             echo "<td>{$rows['title']}</td>";
                             echo "<td><img src='{$rows['image']}'></td>";
 
@@ -110,32 +124,44 @@ require_once "../common/conn.php";
                             echo "</td>";
                             echo "<td class='description'>{$rows['body']}</td>";
                             echo "<td class='date'>{$rows['updated_date']}</td>";
-                            echo "<td class='action'><a class='del' href='delete.php?id={$rows['id']}'><i class='fa-solid fa-trash'></i></a><a class='edit' href='edit.php?id={$rows['id']}'><i class='fa-solid fa-pen-to-square'></i></i></a><a class='details' href='show.php?id={$rows['id']}'><i class='fa-solid fa-circle-info'></i></a></td>";
-                        ?>
+                            ?>
+                            <td class='action'>
+                            <?php if(isset($_SESSION['user']['id'])){ 
+                                $user_id = $_SESSION['user']['id'];
+                                if($_SESSION['user']['name'] == $user['name']){
+                            ?>
+                            <a class='del' href='delete.php?id=<?php echo $rows['id'] ?>'>Del</a>
+                            <a class='edit' href='edit.php?id=<?php echo $rows['id'] ?>'>Edit</i></a>
+                            <?php } }  ?>
+                            <a class='details' href='show.php?id=<?php echo $rows['id'] ?>'>Details</a>
+                            </td>
+                        
                         <?php } 
                         echo "</tr>";
                         ?>
                     </tbody>
+                    <?php } ?>
                 </table>
             </div>
             <div class="pagination clearfix">
-                <?php 
-                if(isset($_GET['search'])){
-                    $title = $_GET['title'];
-                    for($page = 1; $page<= $number_of_page; $page++) {  
-                        echo '<a class="paginate" href = "index.php?title='.$title.'&search=&page=' . $page . '">' . $page . ' </a>';  
+                <div class="paginate-up">
+                    <?php 
+                    if(isset($_GET['search'])){
+                        $title = $_GET['title'];
+                        for($page = 1; $page<= $number_of_page; $page++) {  
+                            echo '<a class="paginate" href = "index.php?title='.$title.'&search=&page=' . $page . '">' . $page . ' </a>';  
+                        }
+                    }else{
+                        for($page = 1; $page<= $number_of_page; $page++) {  
+                            echo '<a class="paginate" href = "index.php?page=' . $page . '">' . $page . ' </a>';  
+                        }
                     }
-                }else{
-                    for($page = 1; $page<= $number_of_page; $page++) {  
-                        echo '<a class="paginate" href = "index.php?page=' . $page . '">' . $page . ' </a>';  
-                    }
-                }
-                 
-                ?>
-            </div>
+                    ?>
+                </div>
             </div>
         </div>
     </div>
+</div>
     <?php 
     $_SESSION['error']=[];
     $_SESSION['success'] = [];

@@ -1,5 +1,5 @@
 body{
-    background-color: #f8f9fa;;
+    background-color: #f4f4f4;;
 }
 .up{
     margin: 40px;
@@ -88,9 +88,9 @@ table{
 }
 
 thead{
-    background-color: #4662EC;
-    color: white;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
+
 
 th{
     font-weight: 700;
@@ -98,11 +98,9 @@ th{
 
 th,td{
     text-align: left;
-    padding: 10px 10px;
+    padding: 15px 30px;
     vertical-align: middle;
 }
-
-tr:nth-child(even) {background-color: rgba(0,0,0,0.05);}
 
 .del{
     text-decoration: none;

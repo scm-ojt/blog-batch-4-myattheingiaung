@@ -26,34 +26,19 @@ require_once "../common/conn.php";
                 WHERE posts.id = '$id'";
         $query = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($query);
-
-        if(isset($_POST['commentAdd'])){
-            if(empty($_POST['comment'])){
-                $errorMessage = 1;
-                $_SESSION['error']['comment']= "comment enter";
-            }
-            if($errorMessage == 0){
-                $comment = $_POST['comment'];
-                $user_id = $_SESSION['user']['id'];
-                $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                $updated_date = $dt->format('Y.m.d , h:i:s');
-                $created_date = $dt->format('Y.m.d , h:i:s');
-                $sql = "INSERT INTO comments (pid,uid,body,created_date,updated_date) VALUES ('$id','$user_id','$comment','$created_date','$updated_date')";
-                if(mysqli_query($conn,$sql)){
-                    header("location:show.php?id=$id");
-                }else{
-                    echo "Query Fail : ".mysqli_error($conn);
-                }
-            }
-        }
     ?>
     <div class="container">
         <div class="inner clearfix">
             <div class="card">
                 <div class="card-body">
+                    <?php 
+                    $sql = "SELECT * FROM users WHERE id={$row['user_id']}";
+                    $query = mysqli_query($conn,$sql);
+                    $user = mysqli_fetch_assoc($query);
+                    ?>
                     <p>
-                        <span class="user-logo"><i class="fa-regular fa-user"></i></span>
-                        <span class="user-name"><?php echo $_SESSION['user']['name']; ?></span>
+                        <span class="user-logo"><i class="fa-solid fa-user"></i></span>
+                        <span class="user-name"><?php echo $user['name'] ?></span>
                     </p>
                     <h2 class="ttl"><?php echo $row['title'] ?></h2>
                     <?php
@@ -78,7 +63,7 @@ require_once "../common/conn.php";
                     </div>
                     <p class="description"><?php echo $row['body'] ?></p>
                 </div>
-                <button class="arrow"><a href="../post/index.php"><i class="fa-solid fa-arrow-left"></i></a></button>
+                <button class="arrow"><a href="../post/index.php"><i class="fa-solid fa-arrow-left"></i>Back</a></button>
             </div>
             <div class="comment">
                 <?php include '../comment/create.php' ?>

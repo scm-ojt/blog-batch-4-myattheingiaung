@@ -49,7 +49,7 @@ require_once "../common/conn.php";
                         <small class="error"><?php if(isset($_SESSION['error']['name'])){ echo $_SESSION['error']['name']; } ?></small>
                         </div>
                         <div class="btn-up">
-                            <button class="btn" name="categoryAdd">Add</button>
+                            <button class="btn" name="categoryAdd">Create</button>
                         </div>
                     </form>
                 </div>
@@ -65,7 +65,7 @@ require_once "../common/conn.php";
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Name</th>
                             <th>Updated Date</th>
                             <th>Action</th>
@@ -73,9 +73,10 @@ require_once "../common/conn.php";
                     </thead>
                     <tbody>
                         <?php
+                        $i = 0;
                         while($rows = mysqli_fetch_assoc($qurey)){
                             echo "<tr>";
-                            echo "<td>{$rows['id']}</td>";
+                            echo "<td>".++$i."</td>";
                             echo "<td>{$rows['name']}</td>";
                             echo "<td>{$rows['updated_date']}</td>";
                             echo "<td><a class='del' href='delete.php?id={$rows['id']}'><i class='fa-solid fa-trash'></i></a><a class='edit' href='edit.php?id={$rows['id']}'><i class='fa-solid fa-pen-to-square'></i></i></a></td>";

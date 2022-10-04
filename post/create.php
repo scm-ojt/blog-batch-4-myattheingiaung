@@ -1,6 +1,12 @@
 <?php
 require_once "../common/conn.php";
 session_start();
+if(!isset($_SESSION['user']['id'])){
+    if ( $_SERVER['REQUEST_METHOD']=='GET' && realpath(__FILE__) == realpath( $_SERVER['SCRIPT_FILENAME'] ) ) {        
+        header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
+        die(header( 'location:index.php' ));
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,10 +81,10 @@ session_start();
             }
     ?>
     <div class="container">
-        <div class="up">
+        <div class="up create-up">
         <div class="ttl-div clearfix">
             <h2 class="lft cmn-ttl">Create Post</h2>
-            <button class="rgt"><a href="index.php"><i class="fa-solid fa-list"></i></a></button>
+            <button class="rgt"><a href="index.php"><i class="fa-solid fa-list"></i>Post List</a></button>
         </div>
         <form class="form" method="post" action="" enctype="multipart/form-data">
             <div class="form-group">
@@ -112,7 +118,7 @@ session_start();
                 <small class="error"><?php if(isset($_SESSION['error']['description'])){ echo $_SESSION['error']['description']; } ?></small>
             </div>
             <div class="btn-up">
-                <button class="btn" name="postAdd">Add</button>
+                <button class="btn full-btn" name="postAdd">Create</button>
             </div>
         </form>
         </div>

@@ -3,7 +3,7 @@ img{
 }
 
 body{
-    background-color: #f8f9fa;
+    background-color: #f4f4f4;
 }
 
 .inner{
@@ -54,12 +54,28 @@ table{
     width: 300px;
 }
 
+.ttl-div.clearfix {
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
 .ttl-div .rgt{
     margin-top: 21px;
 }
 
 .ttl-div .rgt a{
     color: white;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+i.fa-solid.fa-arrow-left {
+    margin-right: 10px;
+}
+
+i.fa-solid.fa-list {
+    margin-right: 10px;
 }
 
 .ttl-div .rgt:hover a{
@@ -67,8 +83,7 @@ table{
 }
 
 thead{
-    background-color: #4662EC;
-    color: white;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 th{
@@ -77,25 +92,50 @@ th{
 
 th,td{
     text-align: left;
-    padding: 10px 10px;
+    padding: 15px 20px;
     vertical-align: middle;
 }
 
-tr:nth-child(even) {background-color: rgba(0,0,0,0.05);}
+th.num {
+    width: 60px;
+}
+
+th.title {
+    width: 140px;
+}
+
+th.date {
+    width: 200px;
+}
+
+th.image {
+    width: 100px;
+}
+
+.action{
+    width: 207px;
+}
+
+.uname{
+    width: 120px;
+}
+
+.cat-name{
+    width: 154px;
+}
 
 span.user-logo {
     display: inline-block;
     width: 31px;
     padding: 3px;
-    color: blue;
     border-radius: 50%;
-    font-size: 26px;
+    font-size: 22px;
 }
 
 span.user-name {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
-    color: blue;
+    text-transform: capitalize;
 }
 
 p.cname {
@@ -127,31 +167,52 @@ p.success {
 }
 
 a.del {
-    margin-right: 10px;
-    color: red;
+    color: white;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 14px;
+    background: red;
+    display: inline-block;
 }
 
 a.edit{
-    color: #1d1d92;
+    color: white;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 14px;
+    background: blue;
+    display: inline-block;
 }
 
 a.details{
-    margin-left: 10px;
-    color: blue;
+    color: white;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 14px;
+    background: green;
+    display: inline-block;
 }
 
 .up{
     width: 580px;
     margin: 40px;
-    padding: 20px 40px 20px 40px;
+    padding: 0px 40px 20px 40px;
     background-color: white;
     box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
-    margin: 0 auto;;
+    margin: 0 auto;
+}
+
+.create-up{
+    margin: 125px auto 0px !important;
 }
 
 .form-group{
     width: 100%;
     margin-bottom: 20px;
+}
+
+form.form {
+    margin-top: 25px;
 }
 
 label{
@@ -183,51 +244,84 @@ input[type="file"] {
 }
 
 button:hover{
-    padding: 10px 15px;
+    /* padding: 10px 15px; */
     border: 2px solid blue;
+    cursor: pointer;
     color: blue;
     background-color: #fff;
 }
 
+.arrow{
+    padding: 0px !important;
+}
+
+.search-btn{
+    padding: 9px 10px !important;
+}
+
 button{
-    padding: 12px 15px;
-    border: none;
+    border: 2px solid blue;
     font-weight: 500;
+    box-sizing: border-box;
     color: #fff;
     background-color: blue;
 }
 
+.btn-up button.full-btn{
+    width: 100% !important;
+    padding: 12px;
+}
+
 .pagination{
-    margin-top: 20px;
+    margin: 20px 0px 60px;
+    text-align: center;
+}
+
+.paginate-up{
+    display: inline-block;
+    background: white;
 }
 
 .paginate{
     display: inline-block;
-    border: 1px solid black;
+    border: 1px solid rgba(0,0,0,0.05);
     text-decoration: none;
     padding: 10px 15px;
-    color: blue;
 }
 
 .search-form{
     display: inline-block;
-    margin-top: 20px;
 }
 
 .arrow a{
     color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 12px 15px;
 }
 
 .arrow:hover > a{
     color: blue;
 }
 
+i.fa-solid.fa-plus {
+    margin-right: 10px;
+}
+
+.form-gp{
+    padding: 20px 0px;
+}
+
 .lft{
     float: left;
+    display: block;
+    cursor: pointer;
 }
 
 .rgt{
     float: right;
+    display: block;
 }
 
 .comment{
@@ -243,10 +337,6 @@ button{
 
 .form-group img {
     margin-bottom: 10px;
-}
-
-.btn-up{
-    display: inline-block;
 }
 
 .btn-up button{

@@ -1,0 +1,28 @@
+body{
+    background-color: #f4f4f4;
+}
+
+.inner {
+    width: 340px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: white;
+}
+
+.ttl{
+    font-size: 30px;
+    text-align: center;
+    color: blue;
+}
+
+.cmn-input{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: none;
+    padding: 9px 20px;
+}
+
+button.cmn-btn {
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    border: none;
+    padding: 9px 10px;
+}

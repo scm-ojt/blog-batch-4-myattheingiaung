@@ -1,4 +1,5 @@
 <?php 
+// session_start();
 require_once "../common/conn.php"; 
 ?>
 <!DOCTYPE html>
@@ -16,22 +17,23 @@ require_once "../common/conn.php";
 <body>
     <?php 
         $errorMessage = 0;
+        $pid = $_SESSION['post']['id'];
+        if(isset($_SESSION['user']['id'])){
+            $user_id =$_SESSION['user']['id'];
+        };
         if(isset($_POST['commentAdd'])){
             if(empty($_POST['comment'])){
                 $errorMessage = 1;
                 $_SESSION['error']['comment']= "comment enter";
             }
             if($errorMessage == 0){
-
-                $pid = $_SESSION['post']['id'];
-                $user_id = $_SESSION['user']['id'];
                 $comment = $_POST['comment'];
                 $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
                 $updated_date = $dt->format('Y.m.d  h:i:s');
                 $created_date = $dt->format('Y.m.d  h:i:s');
-                $sql = "INSERT INTO comments (pid,uid,body,created_date,updated_date) VALUES ('$pid','$user_id','$comment','$created_date','$updated_date')";
+                $sql = "INSERT INTO comments (post_id,user_id,body,created_date,updated_date) VALUES ('$pid','$user_id','$comment','$created_date','$updated_date')";
                 if(mysqli_query($conn,$sql)){
-                    header("location:../comment/create.php");
+                    header("location:../post/show.php?id=$pid");
                 }else{
                     echo "Query Fail : ".mysqli_error($conn);
                 }
@@ -42,33 +44,44 @@ require_once "../common/conn.php";
         <div class="inner">
             <form action="" method="post" class="clearfix">
                 <div class="form-group ps-fg">
-                    <input type="text" name="comment" placeholder="Add a comment"> 
+                    <input type="text" class="cmn-input" name="comment" placeholder="Add a comment"> 
                 </div>
                 <div class="btn-up search-btn">
-                    <button name="commentAdd"><i class="fa-regular fa-paper-plane"></i></button>
+                    <button class="cmn-btn" name="commentAdd"><i class="fa-regular fa-paper-plane"></i></button>
                 </div>
             </form>
             <small class="error"><?php if(isset($_SESSION['error']['comment'])){ echo $_SESSION['error']['comment']; } ?></small>
         </div>
     </div>
     <div class="cmn-show">
-        <ul>
-            <?php
-            $sql1 = "SELECT * FROM comments";
-            $qurey = mysqli_query($conn,$sql1);
-            while($rows = mysqli_fetch_assoc($qurey)){
-            ?>
-                <li class="clearfix">
-                    <p><?php echo $rows['body'] ?></p>
-                    <div class="">
-                        <p><a class='del' href='../comment/delete.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-trash'></i></a></p>
-                        <p><a class='edit' href='../comment/edit.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-pen-to-square'></i></a></p>
-                    </div>
-                </li>
-            <?php
-            }
-            ?>
-        </ul>
+        <div class="inner">
+            <ul>
+                <?php
+                print_r($result);
+                $sql1 = "SELECT * FROM comments WHERE post_id=$pid";
+                $qurey = mysqli_query($conn,$sql1);
+                while($rows = mysqli_fetch_assoc($qurey)){
+                    $user = "SELECT * FROM users JOIN comments ON users.id=comments.user_id WHERE comments.user_id={$rows['user_id']}";
+                    $query = mysqli_query($conn,$user);
+                    $result = mysqli_fetch_assoc($query);
+                ?>
+                    <p class="user-name"><i class="fa-solid fa-user"></i><?php echo $result['name'] ?></p>
+                    <li class="clearfix list-group">
+                        <p class="list-lft"><?php echo $rows['body'] ?></p>
+                        <div class="list-rgt">
+                            <?php if(isset($_SESSION['user']['id'])){ 
+                                if($_SESSION['user']['name'] == $result['name']){
+                            ?>
+                                <p class="list-item"><a class='del' href='../comment/delete.php?id=<?php echo $rows['id'] ?>'>Del</a></p>
+                                <p class="list-item"><a class='edit' href='../comment/edit.php?id=<?php echo $rows['id'] ?>'>Edit</a></p>
+                            <?php } } ?>
+                        </div>
+                    </li>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
     </div>
     <?php 
     $_SESSION['error']=[];

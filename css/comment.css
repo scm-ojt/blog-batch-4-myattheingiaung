@@ -11,8 +11,7 @@ form{
 }
 
 .search-btn{
-    margin-left: 0px;
-    margin-top: 7px;
+    margin-left: -10px;
 }
 
 .btn-up button{
@@ -34,4 +33,82 @@ small.error {
     font-weight: 500;
     color: red;
     font-size: 14px;
+}
+
+li.clearfix.list-group {
+    padding: 0px 0px 20px;
+}
+
+p.list-lft {
+    float: left;
+    margin-left: 21px;
+    color: #00000090;   
+    margin-top: 8px;
+    width: 50%;
+}
+
+.list-rgt {
+    float: right;
+    width: 33%;
+}
+
+.list-rgt .list-item{
+    display: inline-block;
+}
+
+i.fa-solid.fa-user {
+    margin-right: 10px;
+}
+
+.user-name {
+    margin-bottom: 3px;
+    text-transform: capitalize;
+}
+
+.cmn-show {
+    padding-bottom: 40px;
+}
+
+li.clearfix.list-group {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 5px 0px;
+    margin-bottom: 30px;
+}
+
+.cmn-input{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: none;
+    padding: 9px 20px;
+}
+
+button.cmn-btn {
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    border: none;
+    padding: 7.5px 10px;
+}
+
+ul {
+    margin-right: 35px;
+}
+
+.arrow{
+    border: 2px solid blue;
+    font-weight: 500;
+    box-sizing: border-box;
+    color: #fff;
+    background-color: blue;
+    color: white;
+    padding: 5px 15px;
+    margin-top: 30px;
+    float: right;
+    margin-right: 26px;
+}
+
+.arrow a{
+    color: white;
+    text-decoration: none;
+}
+
+.arrow a i{
+    margin-right: 10px;
 }

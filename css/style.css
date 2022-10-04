@@ -1,3 +1,6 @@
+body{
+	background-color: #f4f4f4;
+}
 section.header {
     margin-bottom: 100px;
 }
@@ -31,7 +34,7 @@ nav a {
 	text-decoration:none;
 }
 
-nav a:hover { 
+.active { 
 	text-decoration: underline;
 	text-decoration-color: white;
 	text-decoration-thickness: 3px;
@@ -81,8 +84,4 @@ h1 {
 
 .menu li{
     padding-right: 10px;
-}
-
-.action, .date {
-	width: 100px;
 }
