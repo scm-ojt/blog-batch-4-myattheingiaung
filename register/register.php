@@ -43,11 +43,11 @@ require_once "../common/conn.php";
             $name = $_POST['name'];
             $email = $_POST['email'];
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-            $updated_date = $dt->format('Y.m.d , h:i:s');
-            $created_date = $dt->format('Y.m.d , h:i:s');
+            $dateTime = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
+            $updatedDate = $dateTime->format('Y.m.d , h:i:s');
+            $createdDate = $dateTime->format('Y.m.d , h:i:s');
 
-            $sql = "INSERT INTO users (name,email,password,created_date,updated_date) VALUES ('$name','$email','$password','$created_date','$updated_date')";
+            $sql = "INSERT INTO users (name,email,password,created_date,updated_date) VALUES ('$name','$email','$password','$createdDate','$updatedDate')";
             if(mysqli_query($conn,$sql)){
                 header("location:../login/login.php");
             }else{

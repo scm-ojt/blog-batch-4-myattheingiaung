@@ -28,10 +28,10 @@ require_once "../common/conn.php";
                 $name = $_POST['name'];
                 if($errorMessage == 0) {
                     $name = $_POST['name'];
-                    $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                    $updated_date = $dt->format('Y.m.d h:i:s');
-                    $created_date = $dt->format('Y.m.d h:i:s');
-                    $sql = "INSERT INTO categories (name,created_date,updated_date) VALUES ('$name','$created_date','$updated_date')";
+                    $dateTime = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
+                    $updatedDate = $dateTime->format('Y.m.d h:i:s');
+                    $createdDate = $dateTime->format('Y.m.d h:i:s');
+                    $sql = "INSERT INTO categories (name,created_date,updated_date) VALUES ('$name','$createdDate','$updatedDate')";
                     if(mysqli_query($conn,$sql)){
                         header("location:index.php");
                     }else{
@@ -49,7 +49,7 @@ require_once "../common/conn.php";
                         <small class="error"><?php if(isset($_SESSION['error']['name'])){ echo $_SESSION['error']['name']; } ?></small>
                         </div>
                         <div class="btn-up">
-                            <button class="btn" name="categoryAdd">Create</button>
+                            <button class="btn" name="categoryAdd"><i class="fa-solid fa-plus"></i>Create</button>
                         </div>
                     </form>
                 </div>
@@ -57,8 +57,22 @@ require_once "../common/conn.php";
         </div>
         <div class="rgt">
             <?php
-            $sql1 = "SELECT * FROM categories ORDER BY id DESC";
-            $qurey = mysqli_query($conn,$sql1);
+            if (!isset ($_GET['page']) ) {  
+                $page = 1;  
+            } else {  
+                $page = $_GET['page'];  
+            }  
+            $resultsPerPage = 10;  
+            $pageFirstResult = ($page-1) * $resultsPerPage;  
+            
+            $sql = "SELECT * FROM categories ORDER BY id DESC";
+            $result = mysqli_query($conn, $sql);  
+            $numberOfResult = mysqli_num_rows($result);  
+
+            $numberOfPage = ceil ($numberOfResult / $resultsPerPage);  
+            $sql = "SELECT * FROM categories ORDER BY id DESC LIMIT " . $pageFirstResult . ',' . $resultsPerPage;
+
+            $query = mysqli_query($conn, $sql);    
             ?>
             <div class="">
                 <p class="success"><?php if(isset($_SESSION['success']['msg'])){ echo $_SESSION['success']['msg']; } ?></p>
@@ -73,13 +87,14 @@ require_once "../common/conn.php";
                     </thead>
                     <tbody>
                         <?php
-                        $i = 0;
-                        while($rows = mysqli_fetch_assoc($qurey)){
+                         $getPage= isset($_GET['page']) ? $_GET['page'] : 1;  
+                         $num = ($getPage - 1) * $resultsPerPage;
+                        while($rows = mysqli_fetch_assoc($query)){
                             echo "<tr>";
-                            echo "<td>".++$i."</td>";
+                            echo "<td>".++$num."</td>";
                             echo "<td>{$rows['name']}</td>";
                             echo "<td>{$rows['updated_date']}</td>";
-                            echo "<td><a class='del' href='delete.php?id={$rows['id']}'><i class='fa-solid fa-trash'></i></a><a class='edit' href='edit.php?id={$rows['id']}'><i class='fa-solid fa-pen-to-square'></i></i></a></td>";
+                            echo "<td><a class='del' href='delete.php?id={$rows['id']}'><i class='fa-solid fa-trash'></i>Delete</a><a class='edit' href='edit.php?id={$rows['id']}'><i class='fa-solid fa-pen-to-square'></i></i>Edit</a></td>";
                         ?>
                         <?php } 
                         echo "</tr>";
@@ -87,9 +102,24 @@ require_once "../common/conn.php";
                     </tbody>
                 </table>
             </div>
+            <div class="pagination clearfix">
+                <div class="paginate-up">
+                    <?php 
+                    $currentPage = isset($_GET['page'])?$_GET['page'] : 1;
+                    for($page = 1; $page<= $numberOfPage; $page++) {  
+                        $activeClass = "";
+                        if($page==$currentPage)
+                        {
+                            $activeClass = "active-link";
+                        }
+                        echo '<a id="paginate" class="paginate border-radius '.$activeClass.'" href = "index.php?page=' . $page . '">' . $page . ' </a>';  
+                    }
+                    ?>
+                </div>
             </div>
         </div>
-    </div>
+    </div>    
+</div>
     <?php 
     $_SESSION['error']=[];
     $_SESSION['success'] = [];

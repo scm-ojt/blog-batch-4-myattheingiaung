@@ -41,6 +41,20 @@ nav a {
 	text-underline-offset: 7px;
 }
 
+nav a:hover{ 
+	text-decoration: underline;
+	text-decoration-color: white;
+	text-decoration-thickness: 3px;
+	text-underline-offset: 7px;
+}
+
+nav a i:hover{ 
+	text-decoration: underline;
+	text-decoration-color: white;
+	text-decoration-thickness: 3px;
+	text-underline-offset: 7px;
+}
+
 nav ul ul {
 	display: none;
 	position: absolute; 
@@ -58,7 +72,9 @@ nav ul ul li {
 	position: relative;
 }
 
-li > a:after { content:  ' +'; }
+
+
+li > a:after { content:  ' '; }
 li > a:only-child:after { content: ''; }
 
 .dropdown a{

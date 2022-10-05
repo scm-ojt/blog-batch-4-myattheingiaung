@@ -1,7 +1,5 @@
 <?php 
 session_start();
-
-
 require_once "../common/conn.php"; 
 ?>
 <!DOCTYPE html>
@@ -27,8 +25,8 @@ require_once "../common/conn.php";
                     } else {  
                         $page = $_GET['page'];  
                     }  
-                    $results_per_page = 3;  
-                    $page_first_result = ($page-1) * $results_per_page;  
+                    $resultsPerPage = 3;  
+                    $pageFirstResult = ($page-1) * $resultsPerPage;  
                     if(isset($_GET['search'])){
                         $title = $_GET['title'];
                         $query = "SELECT * FROM posts WHERE title LIKE '%".$title."%' ORDER BY id DESC";
@@ -36,29 +34,29 @@ require_once "../common/conn.php";
                         $query = "SELECT * FROM posts ORDER BY id DESC";
                     }
                     $result = mysqli_query($conn, $query);  
-                    $number_of_result = mysqli_num_rows($result);  
+                    $numberOfResult = mysqli_num_rows($result);  
     
-                    $number_of_page = ceil ($number_of_result / $results_per_page);  
+                    $numberOfPage = ceil ($numberOfResult / $resultsPerPage);  
  
                     if(isset($_GET['search'])){
                         $title = $_GET['title'];
-                        $query = "SELECT * FROM posts WHERE title LIKE '%".$title."%' ORDER BY id DESC LIMIT " . $page_first_result . ',' . $results_per_page;
+                        $query = "SELECT * FROM posts WHERE title LIKE '%".$title."%' ORDER BY id DESC LIMIT " . $pageFirstResult . ',' . $resultsPerPage;
                     }else{
-                        $query = "SELECT * FROM posts ORDER BY id DESC LIMIT " . $page_first_result . ',' . $results_per_page;
+                        $query = "SELECT * FROM posts ORDER BY id DESC LIMIT " . $pageFirstResult . ',' . $resultsPerPage;
                     }
                     $result = mysqli_query($conn, $query);    
                  
                 ?>
                 <div class="lft">
                 <?php if(isset($_SESSION['user']['id'])){ ?>
-                <button class="arrow arrow-btn"><a href="../post/create.php"><i class="fa-solid fa-plus"></i>Create</a></button>
+                <button class="arrow arrow-btn border-radius"><a href="../post/create.php"><i class="fa-solid fa-plus"></i>Create</a></button>
                 <?php } ?>
                 </div>
                 <div class="rgt">
                     <form action="" class="search-form">
                         <div class="">
                             <input type="text" class="search" name="title" placeholder="Search Title...">
-                            <button class="btn search-btn" name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <button class="btn search-btn border-radius" name="search"><i class="fa-solid fa-magnifying-glass"></i><span class="search-text">Search</span></button>
                         </div>
                     </form>
                 </div>
@@ -78,7 +76,7 @@ require_once "../common/conn.php";
                             <th class="action">Action</th>
                         </tr>
                     </thead>
-                    <?php if($number_of_result < 1){
+                    <?php if($numberOfResult < 1){
                     ?>
                     <tbody>
                         <tr>
@@ -88,13 +86,13 @@ require_once "../common/conn.php";
                     <?php }else{ ?>
                         <tbody>
                         <?php  
-                        $a= isset($_GET['page']) ? $_GET['page'] : 1;  
-                        $i = ($a - 1) * $results_per_page;
+                        $getPage= isset($_GET['page']) ? $_GET['page'] : 1;  
+                        $num = ($getPage - 1) * $resultsPerPage;
                         while($rows = mysqli_fetch_array($result)){
                             $id = $rows['id'];
                             echo "<tr>";
 
-                            echo "<td>".++$i."</td>";
+                            echo "<td>".++$num."</td>";
 
                             $sql = "SELECT * FROM users WHERE id={$rows['user_id']}";
                             $query = mysqli_query($conn,$sql);
@@ -116,7 +114,7 @@ require_once "../common/conn.php";
                                 if($id = $row['id']){
                             ?>
                             <ul>
-                                <li><?php echo $row['name'] ?></li>
+                                <li class="pill"><?php echo $row['name'] ?></li>
                             </ul>
                             <?php
                                 }
@@ -126,14 +124,15 @@ require_once "../common/conn.php";
                             echo "<td class='date'>{$rows['updated_date']}</td>";
                             ?>
                             <td class='action'>
+                            <a class='details border-radius' href='show.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-circle-info'></i>Details</a>
                             <?php if(isset($_SESSION['user']['id'])){ 
-                                $user_id = $_SESSION['user']['id'];
+                                $userId = $_SESSION['user']['id'];
                                 if($_SESSION['user']['name'] == $user['name']){
                             ?>
-                            <a class='del' href='delete.php?id=<?php echo $rows['id'] ?>'>Del</a>
-                            <a class='edit' href='edit.php?id=<?php echo $rows['id'] ?>'>Edit</i></a>
+                            <a class='del border-radius' href='delete.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-trash'></i>Delete</a>
+                            <a class='edit border-radius' href='edit.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-pen-to-square'></i>Edit</a>
+                   
                             <?php } }  ?>
-                            <a class='details' href='show.php?id=<?php echo $rows['id'] ?>'>Details</a>
                             </td>
                         
                         <?php } 
@@ -148,12 +147,24 @@ require_once "../common/conn.php";
                     <?php 
                     if(isset($_GET['search'])){
                         $title = $_GET['title'];
-                        for($page = 1; $page<= $number_of_page; $page++) {  
-                            echo '<a class="paginate" href = "index.php?title='.$title.'&search=&page=' . $page . '">' . $page . ' </a>';  
+                        $currentPage = isset($_GET['page'])?$_GET['page'] : 1;
+                        for($page = 1; $page<= $numberOfPage; $page++) {  
+                            $activeClass = "";
+                            if($page==$currentPage)
+                            {
+                                $activeClass = "active-link";
+                            }
+                            echo '<a id="paginate" class="paginate border-radius '.$activeClass.'" href = "index.php?title='.$title.'&search=&page=' . $page . '">' . $page . ' </a>';  
                         }
                     }else{
-                        for($page = 1; $page<= $number_of_page; $page++) {  
-                            echo '<a class="paginate" href = "index.php?page=' . $page . '">' . $page . ' </a>';  
+                        $currentPage = isset($_GET['page'])?$_GET['page'] : 1;
+                        for($page = 1; $page<= $numberOfPage; $page++) {  
+                            $activeClass = "";
+                            if($page==$currentPage)
+                            {
+                                $activeClass = "active-link";
+                            }
+                            echo '<a id="paginate" class="paginate border-radius '.$activeClass.'" href = "index.php?page=' . $page . '">' . $page . ' </a>';  
                         }
                     }
                     ?>
@@ -166,5 +177,6 @@ require_once "../common/conn.php";
     $_SESSION['error']=[];
     $_SESSION['success'] = [];
     ?>
+
 </body>
 </html>

@@ -1,7 +1,3 @@
-img{
-    width: 100px;
-}
-
 body{
     background-color: #f4f4f4;
 }
@@ -11,11 +7,34 @@ body{
     margin: 0 auto;
 }
 
+.up{
+    width: 580px;
+    margin: 40px;
+    padding: 0px 40px 20px 40px;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
+    margin: 0 auto;
+}
+
+img{
+    width: 100px;
+}
+
+.img-div{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.show-img{
+    width: 300px;
+}
+
 .card{
     width: 70%;
     box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
     background-color: white;
     float: left;
+    padding-bottom: 50px;
 }
 
 .ps-fg{
@@ -40,20 +59,6 @@ body{
     margin-top: 15px;
 }
 
-table{
-    width: 100%;
-    background-color: #fff;
-}
-
-.img-div{
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.show-img{
-    width: 300px;
-}
-
 .ttl-div.clearfix {
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
@@ -65,21 +70,18 @@ table{
 .ttl-div .rgt a{
     color: white;
     display: block;
-    padding: 10px;
+    padding: 7px 8px;
     text-decoration: none;
     font-size: 16px;
 }
 
-i.fa-solid.fa-arrow-left {
-    margin-right: 10px;
-}
-
-i.fa-solid.fa-list {
-    margin-right: 10px;
-}
-
 .ttl-div .rgt:hover a{
     color: blue;
+}
+
+table{
+    width: 100%;
+    background-color: #fff;
 }
 
 thead{
@@ -113,7 +115,7 @@ th.image {
 }
 
 .action{
-    width: 207px;
+    width: 270px;
 }
 
 .uname{
@@ -168,38 +170,59 @@ p.success {
 
 a.del {
     color: white;
-    padding: 10px 10px;
+    padding: 8px 5px;
     text-decoration: none;
     font-size: 14px;
     background: red;
+    border: 2px solid red;
     display: inline-block;
+}
+
+a.del:hover{
+    background-color: white;
+    border: 2px solid red;
+    color: red;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
+    transition-delay: 0.01s;
 }
 
 a.edit{
     color: white;
-    padding: 10px 10px;
+    padding: 8px 5px;
     text-decoration: none;
+    border: 2px solid blue;
     font-size: 14px;
     background: blue;
     display: inline-block;
 }
 
+a.edit:hover{
+    background-color: white;
+    border: 2px solid blue;
+    color: blue;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
+    transition-delay: 0.01s;
+}
+
 a.details{
     color: white;
-    padding: 10px 10px;
+    padding: 8px 5px;
     text-decoration: none;
+    border: 2px solid transparent;
     font-size: 14px;
     background: green;
     display: inline-block;
 }
 
-.up{
-    width: 580px;
-    margin: 40px;
-    padding: 0px 40px 20px 40px;
+a.details:hover{
     background-color: white;
-    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
-    margin: 0 auto;
+    border: 2px solid green;
+    color: green;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
+    transition-delay: 0.01s;
 }
 
 .create-up{
@@ -223,8 +246,10 @@ label{
 
 input,select,textarea{
     width: 100%;
+    border: 1px solid #aaa;
     padding-left: 10px;
     outline: none;
+    border-radius: 4px;
 }
 
 input{
@@ -232,9 +257,10 @@ input{
 }
 
 .search{
+    border-radius: 7px;
     width: 200px;
     padding: 10px 10px;
-    border: 1px solid blue;
+    border: 1px solid #aaa;
 }
 
 input[type="file"] {
@@ -243,28 +269,85 @@ input[type="file"] {
     padding: 0px;
 }
 
-button:hover{
-    /* padding: 10px 15px; */
-    border: 2px solid blue;
+.search-form{
+    display: inline-block;
+}
+
+.search-text{
+    font-size: 16px;
+}
+
+.form-gp{
+    padding: 20px 0px;
+}
+
+.form-group{
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.form-group img {
+    margin-bottom: 10px;
+}
+
+.lft{
+    float: left;
+    display: block;
     cursor: pointer;
-    color: blue;
-    background-color: #fff;
+}
+
+.rgt{
+    float: right;
+    display: block;
 }
 
 .arrow{
     padding: 0px !important;
 }
 
-.search-btn{
-    padding: 9px 10px !important;
+.arrow a{
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 10px 10px;
+}
+
+.arrow:hover > a{
+    color: blue;
 }
 
 button{
+    font-size: 16px;
     border: 2px solid blue;
     font-weight: 500;
     box-sizing: border-box;
     color: #fff;
     background-color: blue;
+}
+
+button:hover{
+    border: 2px solid blue;
+    cursor: pointer;
+    color: blue;
+    background-color: #fff;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
+    transition-delay: 0.01s;
+}
+
+.search-btn{
+    padding: 7px 10px 9px!important;
+}
+
+.arrow-btn, .search-btn , .detail , .del , .edit{
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
+    transition-delay: 0.01s;
+}
+
+.btn-up .create-btn{
+    margin-top: -20px; 
 }
 
 .btn-up button.full-btn{
@@ -280,6 +363,7 @@ button{
 .paginate-up{
     display: inline-block;
     background: white;
+    border-radius: 10px;
 }
 
 .paginate{
@@ -289,66 +373,16 @@ button{
     padding: 10px 15px;
 }
 
-.search-form{
-    display: inline-block;
-}
-
-.arrow a{
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    display: block;
-    padding: 12px 15px;
-}
-
-.arrow:hover > a{
-    color: blue;
-}
-
-i.fa-solid.fa-plus {
-    margin-right: 10px;
-}
-
-.form-gp{
-    padding: 20px 0px;
-}
-
-.lft{
-    float: left;
-    display: block;
-    cursor: pointer;
-}
-
-.rgt{
-    float: right;
-    display: block;
-}
-
 .comment{
     width: 30%;
     float: right;
     background-color: white;
 }
 
-.form-group{
-    display: inline-block;
-    margin-bottom: 20px;
-}
-
-.form-group img {
-    margin-bottom: 10px;
-}
-
-.btn-up button{
-    font-size: 16px;
-    margin-top: -20px;
-    
-}
-
 input{
     width: 100%;
     outline: none;
-    padding: 5px 20px;
+    padding: 7px 20px;
 }
 
 small.error {
@@ -357,4 +391,26 @@ small.error {
     font-weight: 500;
     color: red;
     font-size: 14px;
+}
+
+.active-link{
+    background-color: blue;
+    color: white;
+}
+
+i {
+    margin-right: 10px;
+}
+
+.border-radius{
+    border-radius: 7px;
+}
+
+.pill{
+    border-radius: 50px;
+    background-color: blue;
+    color: white;
+    padding: 5px 20px;
+    display: inline-block;
+    margin-bottom: 5px;
 }

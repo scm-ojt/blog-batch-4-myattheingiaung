@@ -41,10 +41,10 @@ if(!isset($_SESSION['user']['id'])){
                         $_SESSION['error']['type']= "Select .png, .jpeg, .gif file!";
                     }elseif($errorMessage == 0){
                         unlink($row['image']);
-                        $target_dir = "../img/posts";
+                        $targetDir = "../img/posts";
                         $fileExt = explode('.',$_FILES['image']['name']);
                         $fileActualExt = strtolower(end($fileExt));
-                        $image =  $target_dir. "/".uniqid(rand(), true).".".$fileActualExt;
+                        $image =  $targetDir. "/".uniqid(rand(), true).".".$fileActualExt;
                         move_uploaded_file($_FILES['image']['tmp_name'], $image);
                     }
                 }else{
@@ -62,9 +62,9 @@ if(!isset($_SESSION['user']['id'])){
                 if($errorMessage == 0) {
                     $title = $_POST['title'];
                     $description = $_POST['description'];
-                    $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                    $updated_date = $dt->format('Y.m.d h:i:s');
-                    $sql = "UPDATE posts SET image='$image',title='$title',body='$description',updated_date='$updated_date' WHERE  id=$id";
+                    $dateTime = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
+                    $updatedDate = $dateTime->format('Y.m.d h:i:s');
+                    $sql = "UPDATE posts SET image='$image',title='$title',body='$description',updated_date='$updatedDate' WHERE  id=$id";
                     if(mysqli_query($conn,$sql)){
                         header("location:index.php");
                     }else{
@@ -89,7 +89,7 @@ if(!isset($_SESSION['user']['id'])){
     <div class="up create-up">
         <div class="ttl-div clearfix">
             <h2 class="lft cmn-ttl">Edit Post</h2>
-            <button class="rgt"><a href="index.php"><i class="fa-solid fa-list"></i>Post List</a></button>
+            <button class="rgt border-radius"><a href="index.php"><i class="fa-solid fa-list"></i>Post List</a></button>
         </div>
         <form class="form" method="post" action="" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
@@ -116,8 +116,8 @@ if(!isset($_SESSION['user']['id'])){
                         JOIN category_post ON categories.id = category_post.category_id
                         JOIN posts ON posts.id = category_post.post_id
                         WHERE posts.id = '$id'";
-                        $q = mysqli_query($conn,$sql);
-                        while($result = mysqli_fetch_array($q)){
+                        $query = mysqli_query($conn,$sql);
+                        while($result = mysqli_fetch_array($query)){
                             $catId[] = $result['category_id'];
                         }; 
                         $category = "SELECT * FROM categories";
@@ -140,7 +140,7 @@ if(!isset($_SESSION['user']['id'])){
                 <small class="error"><?php if(isset($_SESSION['error']['description'])){ echo $_SESSION['error']['description']; } ?></small>
             </div>
             <div class="btn-up">
-                <button class="btn full-btn" name="postEdit">Update</button>
+                <button class="btn full-btn border-radius" name="postEdit">Update</button>
             </div>
         </form>
     </div>

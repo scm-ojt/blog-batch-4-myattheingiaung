@@ -19,6 +19,8 @@ require_once "../common/conn.php";
     <?php 
         $errorMessage = 0;
         $id = $_GET['id'];
+        $postId = $_SESSION['post']['id'];
+        $userId = $_SESSION['user']['id'];
         $comment = "SELECT * FROM comments WHERE id=$id";
         $query = mysqli_query($conn,$comment);
         $row = mysqli_fetch_assoc($query);
@@ -28,15 +30,12 @@ require_once "../common/conn.php";
                 $_SESSION['error']['comment']= "comment enter";
             }
             if($errorMessage == 0){
-
-                $pid = $_SESSION['post']['id'];
-                $user_id = $_SESSION['user']['id'];
                 $comment = $_POST['comment'];
-                $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                $updated_date = $dt->format('Y.m.d  h:i:s');
-                $sql = "UPDATE comments SET body='$comment',updated_date='$updated_date' WHERE  id=$id";
+                $dateTime = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
+                $updatedDate = $dateTime->format('Y.m.d  h:i:s');
+                $sql = "UPDATE comments SET body='$comment',updated_date='$updatedDate' WHERE  id=$id";
                 if(mysqli_query($conn,$sql)){
-                    header("location:../post/show.php?id=$pid");
+                    header("location:../post/show.php?id=$postId");
                 }else{
                     echo "Query Fail : ".mysqli_error($conn);
                 }
@@ -56,7 +55,7 @@ require_once "../common/conn.php";
             </form>
             <small class="error"><?php if(isset($_SESSION['error']['comment'])){ echo $_SESSION['error']['comment']; } ?></small>
             <div class="clearfix">
-                <button class="arrow"><a href="../post/index.php"><i class="fa-solid fa-arrow-left"></i>Back</a></button>
+                <button class="arrow"><a href='../post/show.php?id=<?php echo $postId ?>'><i class="fa-solid fa-arrow-left"></i>Back</a></button>
             </div>
         </div>
     </div>

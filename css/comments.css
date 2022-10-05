@@ -26,3 +26,7 @@ button.cmn-btn {
     border: none;
     padding: 9px 10px;
 }
+
+.btn-up.search-btn.cmn-search-btn {
+    margin-top: -7px;
+}

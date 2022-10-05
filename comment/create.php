@@ -1,5 +1,4 @@
 <?php 
-// session_start();
 require_once "../common/conn.php"; 
 ?>
 <!DOCTYPE html>
@@ -17,9 +16,9 @@ require_once "../common/conn.php";
 <body>
     <?php 
         $errorMessage = 0;
-        $pid = $_SESSION['post']['id'];
+        $postId = $_SESSION['post']['id'];
         if(isset($_SESSION['user']['id'])){
-            $user_id =$_SESSION['user']['id'];
+            $userId =$_SESSION['user']['id'];
         };
         if(isset($_POST['commentAdd'])){
             if(empty($_POST['comment'])){
@@ -27,16 +26,21 @@ require_once "../common/conn.php";
                 $_SESSION['error']['comment']= "comment enter";
             }
             if($errorMessage == 0){
-                $comment = $_POST['comment'];
-                $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                $updated_date = $dt->format('Y.m.d  h:i:s');
-                $created_date = $dt->format('Y.m.d  h:i:s');
-                $sql = "INSERT INTO comments (post_id,user_id,body,created_date,updated_date) VALUES ('$pid','$user_id','$comment','$created_date','$updated_date')";
-                if(mysqli_query($conn,$sql)){
-                    header("location:../post/show.php?id=$pid");
+                if(isset($userId)){
+                    $comment = $_POST['comment'];
+                    $dateTime = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
+                    $updatedDate = $dateTime->format('Y.m.d  h:i:s');
+                    $createdDate = $dateTime->format('Y.m.d  h:i:s');
+                    $sql = "INSERT INTO comments (post_id,user_id,body,created_date,updated_date) VALUES ('$postId','$userId','$comment','$createdDate','$updatedDate')";
+                    if(mysqli_query($conn,$sql)){
+                        header("location:../post/show.php?id=$postId");
+                    }else{
+                        echo "Query Fail : ".mysqli_error($conn);
+                    }
                 }else{
-                    echo "Query Fail : ".mysqli_error($conn);
+                    $_SESSION['error']['comment']= "Login First!";
                 }
+                
             }
         }
     ?>
@@ -46,7 +50,7 @@ require_once "../common/conn.php";
                 <div class="form-group ps-fg">
                     <input type="text" class="cmn-input" name="comment" placeholder="Add a comment"> 
                 </div>
-                <div class="btn-up search-btn">
+                <div class="btn-up search-btn cmn-search-btn">
                     <button class="cmn-btn" name="commentAdd"><i class="fa-regular fa-paper-plane"></i></button>
                 </div>
             </form>
@@ -58,7 +62,7 @@ require_once "../common/conn.php";
             <ul>
                 <?php
                 print_r($result);
-                $sql1 = "SELECT * FROM comments WHERE post_id=$pid";
+                $sql1 = "SELECT * FROM comments WHERE post_id=$postId";
                 $qurey = mysqli_query($conn,$sql1);
                 while($rows = mysqli_fetch_assoc($qurey)){
                     $user = "SELECT * FROM users JOIN comments ON users.id=comments.user_id WHERE comments.user_id={$rows['user_id']}";
@@ -72,8 +76,8 @@ require_once "../common/conn.php";
                             <?php if(isset($_SESSION['user']['id'])){ 
                                 if($_SESSION['user']['name'] == $result['name']){
                             ?>
-                                <p class="list-item"><a class='del' href='../comment/delete.php?id=<?php echo $rows['id'] ?>'>Del</a></p>
-                                <p class="list-item"><a class='edit' href='../comment/edit.php?id=<?php echo $rows['id'] ?>'>Edit</a></p>
+                                <p class="list-item"><a class='del radius' href='../comment/delete.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-trash'></i>Delete</a></p>
+                                <p class="list-item"><a class='edit radius' href='../comment/edit.php?id=<?php echo $rows['id'] ?>'><i class='fa-solid fa-pen-to-square'></i>Edit</a></p>
                             <?php } } ?>
                         </div>
                     </li>

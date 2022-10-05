@@ -20,34 +20,6 @@ header("Access-Control-Allow-Origin:*");
         if(empty($email)){
             $_SESSION['error']['mes']= "Input field is required!";
         }
-        require_once "vendor/autoload.php";
-        require_once "vendor/PHPMailer/PHPMailer/src/PHPMailer.php";
-        require_once "vendor/PHPMailer/PHPMailer/src/SMTP.php";
-        require_once "vendor/PHPMailer/PHPMailer/src/Exception.php";
-        $mail = new PHPMailer\PHPMailer\PHPMailer();
-        
-        //smtp setting
-        $mail->isSMTP();
-        $mail->Host = "smtp.gmail.com";
-        $mail->SMTPAuth = true;
-        $mail->Username = "myattheingiaung1720@gmail.com";
-        $mail->Password = 'chce pdkt kynd fmrw';
-        $mail->Port = 25;
-        $mail->SMTPSecure = "tls";
-
-        //email setting
-        $mail->setFrom('myattheingiaung1720@gmail.com','PHPMailer Example');
-        $mail->addAddress($email,'Myat Theingi Aung');
-        $mail->Subject = "Hello";
-        $mail->Body = "<a href='http://localhost:8000/reset.php'>Reset Password Form </a>";
-        $mail->AltBody = "This is the body in plain text for non-html mail clients";
-
-        if(!$mail->send()){
-            echo "Message could not be sent.";
-            echo "Mailer Error : ". $mail->ErrorInfo;
-        }else{
-            $success = "Message has been sent successfully!";
-        }
     }
     ?> 
     <p class="error"><?php if(isset($_SESSION['error']['message'])){ echo $_SESSION['error']['message']; } ?></p>

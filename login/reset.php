@@ -36,12 +36,12 @@ session_start();
             $newPassword = $_POST['new-pass']; 
             $confirmPassword = $_POST['cpass']; 
 
-            $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-            $updated_date = $dt->format('Y.m.d , h:i:s');
+            $dateTime = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
+            $updatedDate = $dateTime->format('Y.m.d , h:i:s');
         
             if($newPassword == $confirmPassword){
                 $spass = password_hash($newPassword,PASSWORD_DEFAULT);                 
-                $sql = "UPDATE users SET password='$spass',updated_date='$updated_date' WHERE  id=$id";
+                $sql = "UPDATE users SET password='$spass',updated_date='$updatedDate' WHERE  id=$id";
                 if(mysqli_query($conn,$sql)){
                     $_SESSION['success']['message'] =  "Password Update Successfully!";
                     header("location:login.php");

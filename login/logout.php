@@ -11,7 +11,7 @@
     session_start();
     unset($_SESSION["user"]["id"]);
     unset($_SESSION["user"]["name"]);
-    header("location:login.php"); 
+    header("location:../post/index.php"); 
     ?>
 </body>
 </html>

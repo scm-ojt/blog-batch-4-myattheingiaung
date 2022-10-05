@@ -47,18 +47,18 @@ if(!isset($_SESSION['user']['id'])){
                 }
 
                 if($errorMessage == 0) {
-                    $target_dir = "../img/posts";
+                    $targetDir = "../img/posts";
                     $fileExt = explode('.',$_FILES['image']['name']);
                     $fileActualExt = strtolower(end($fileExt));
-                    $image =  $target_dir. "/".uniqid(rand(), true).".".$fileActualExt;
+                    $image =  $targetDir. "/".uniqid(rand(), true).".".$fileActualExt;
                     move_uploaded_file($_FILES['image']['tmp_name'], $image);
                     $title = $_POST['title'];
                     $description = $_POST['description'];
-                    $dt = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
-                    $updated_date = $dt->format('Y.m.d  h:i:s');
-                    $created_date = $dt->format('Y.m.d  h:i:s');
-                    $user_id = $_SESSION['user']['id'];
-                    $sql = "INSERT INTO posts (image,title,body,created_date,updated_date,user_id) VALUES ('$image','$title','$description','$created_date','$updated_date','$user_id')";
+                    $dateTime = new DateTime("now", new DateTimeZone('Asia/Yangon')); 
+                    $updatedDate = $dateTime->format('Y.m.d  h:i:s');
+                    $createdDate = $dateTime->format('Y.m.d  h:i:s');
+                    $userId = $_SESSION['user']['id'];
+                    $sql = "INSERT INTO posts (image,title,body,created_date,updated_date,user_id) VALUES ('$image','$title','$description','$createdDate','$updatedDate','$userId')";
                     if(mysqli_query($conn,$sql)){
                         header("location:index.php");
                     }else{
@@ -66,12 +66,12 @@ if(!isset($_SESSION['user']['id'])){
                     }
 
                     if(isset($_POST["cname"])) {                       
-                        foreach ($_POST['cname'] as $cid) { 
-                            $ss = "select last_insert_id()";
-                            $query = mysqli_query($conn,$ss);
+                        foreach ($_POST['cname'] as $categoryId) { 
+                            $lastPostId = "select last_insert_id()";
+                            $query = mysqli_query($conn,$lastPostId);
                             $row = mysqli_fetch_assoc($query);
-                            $pid = $row['last_insert_id()'];
-                            $sql = "INSERT INTO category_post (post_id,category_id) VALUES ('$pid','$cid')";
+                            $postId = $row['last_insert_id()'];
+                            $sql = "INSERT INTO category_post (post_id,category_id) VALUES ('$postId','$categoryId')";
                             if(!mysqli_query($conn,$sql)){
                                 echo "Query Fail : ".mysqli_error($conn);
                             } 
@@ -84,7 +84,7 @@ if(!isset($_SESSION['user']['id'])){
         <div class="up create-up">
         <div class="ttl-div clearfix">
             <h2 class="lft cmn-ttl">Create Post</h2>
-            <button class="rgt"><a href="index.php"><i class="fa-solid fa-list"></i>Post List</a></button>
+            <button class="rgt border-radius"><a href="index.php"><i class="fa-solid fa-list"></i>Post List</a></button>
         </div>
         <form class="form" method="post" action="" enctype="multipart/form-data">
             <div class="form-group">
@@ -118,7 +118,7 @@ if(!isset($_SESSION['user']['id'])){
                 <small class="error"><?php if(isset($_SESSION['error']['description'])){ echo $_SESSION['error']['description']; } ?></small>
             </div>
             <div class="btn-up">
-                <button class="btn full-btn" name="postAdd">Create</button>
+                <button class="btn full-btn create-btn border-radius" name="postAdd">Create</button>
             </div>
         </form>
         </div>
