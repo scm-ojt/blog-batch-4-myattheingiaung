@@ -2,7 +2,7 @@
 
 ## Git clone
 
-git clone url
+git clone https://github.com/scm-ojt/blog-batch-4-myattheingiaung.git
 
 ## Run
 
